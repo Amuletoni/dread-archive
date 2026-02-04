@@ -1,0 +1,48 @@
+# Site Settings
+title: "DREAD ARCHIVE"
+description: "Horror Video Game Encyclopedia — Database, Reviews, and Deep Analysis"
+url: "" # Your GitHub Pages URL will go here, e.g., https://yourusername.github.io
+baseurl: "/dread-archive" # Your repository name (change if different)
+
+# Build Settings
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+
+# Collections (our content types)
+collections:
+  games:
+    output: true
+    permalink: /games/:name/
+  reviews:
+    output: true
+    permalink: /reviews/:name/
+  analyses:
+    output: true
+    permalink: /analysis/:name/
+
+# Default front matter
+defaults:
+  - scope:
+      path: ""
+      type: "games"
+    values:
+      layout: "game"
+  - scope:
+      path: ""
+      type: "reviews"
+    values:
+      layout: "review"
+  - scope:
+      path: ""
+      type: "analyses"
+    values:
+      layout: "analysis"
+
+# Exclude from build
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor

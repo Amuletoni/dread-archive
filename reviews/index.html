@@ -1,0 +1,29 @@
+---
+layout: default
+title: Game Reviews
+---
+
+<div class="page-header">
+    <h1 class="page-title">Game Reviews</h1>
+    <p class="page-description">Classic reviews focused on gameplay, mechanics, and the horror experience</p>
+</div>
+
+<div class="container">
+    <div class="reviews-list">
+        {% assign sorted_reviews = site.reviews | sort: 'date' | reverse %}
+        {% for review in sorted_reviews %}
+        <a href="{{ review.url | relative_url }}" class="review-card">
+            <div class="review-image" {% if review.cover %}style="background-image: url('{{ review.cover | relative_url }}')"{% endif %}>
+                {% unless review.cover %}{{ review.title | truncate: 2, "" }}{% endunless %}
+            </div>
+            <div class="review-content">
+                <h3>{{ review.title }}</h3>
+                <div class="review-meta">Reviewed: {{ review.date | date: "%B %Y" }} · Platform: {{ review.platform }}</div>
+                <p class="review-excerpt">{{ review.excerpt | strip_html | truncate: 200 }}</p>
+                <span class="score">{{ review.score }}</span>
+                <span class="read-more">Read Full Review →</span>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>

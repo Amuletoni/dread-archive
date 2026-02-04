@@ -1,0 +1,831 @@
+---
+---
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+    --blood: #8B0000;
+    --blood-bright: #B22222;
+    --void: #0a0a0a;
+    --fog: #1a1a1f;
+    --mist: #2a2a32;
+    --bone: #e8e4d9;
+    --ash: #9a9590;
+    --rust: #6B3A3A;
+    --shadow: rgba(0, 0, 0, 0.8);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    background: var(--void);
+    color: var(--bone);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.7;
+    font-size: 18px;
+}
+
+/* Grain overlay */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+a {
+    color: var(--blood-bright);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: var(--bone);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Navigation */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: linear-gradient(180deg, var(--void) 0%, transparent 100%);
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Creepster', cursive;
+    font-size: 1.8rem;
+    color: var(--blood);
+    letter-spacing: 0.15em;
+    text-shadow: 0 0 30px rgba(139, 0, 0, 0.5);
+    text-decoration: none;
+    transition: text-shadow 0.3s;
+}
+
+.logo:hover {
+    text-shadow: 0 0 50px rgba(139, 0, 0, 0.8);
+    color: var(--blood);
+}
+
+.nav-links {
+    display: flex;
+    gap: 3rem;
+    list-style: none;
+}
+
+.nav-links a {
+    color: var(--ash);
+    text-decoration: none;
+    font-size: 0.95rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    position: relative;
+    transition: color 0.3s;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--blood);
+    transition: width 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--bone);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* Hero Section */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 6rem 2rem;
+    position: relative;
+    background: 
+        radial-gradient(ellipse at 50% 0%, rgba(139, 0, 0, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 20% 80%, rgba(139, 0, 0, 0.1) 0%, transparent 40%),
+        var(--void);
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.1) 2px,
+        rgba(0, 0, 0, 0.1) 4px
+    );
+    pointer-events: none;
+}
+
+.hero-title {
+    font-family: 'Creepster', cursive;
+    font-size: clamp(4rem, 12vw, 10rem);
+    color: var(--bone);
+    letter-spacing: 0.1em;
+    text-shadow: 
+        0 0 60px rgba(139, 0, 0, 0.4),
+        0 4px 0 var(--blood),
+        0 8px 20px rgba(0, 0, 0, 0.8);
+    animation: flicker 4s infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes flicker {
+    0%, 100% { opacity: 1; }
+    92% { opacity: 1; }
+    93% { opacity: 0.8; }
+    94% { opacity: 1; }
+    96% { opacity: 0.9; }
+    97% { opacity: 1; }
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    color: var(--ash);
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+    font-weight: 400;
+}
+
+.hero-description {
+    max-width: 600px;
+    font-size: 1.2rem;
+    color: var(--ash);
+    font-style: italic;
+    line-height: 1.9;
+    margin-bottom: 3rem;
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--ash);
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    animation: pulse 2s infinite;
+}
+
+.scroll-indicator::after {
+    content: '';
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(180deg, var(--blood) 0%, transparent 100%);
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* Page Headers */
+.page-header {
+    padding: 10rem 2rem 4rem;
+    text-align: center;
+    background: 
+        radial-gradient(ellipse at 50% 0%, rgba(139, 0, 0, 0.15) 0%, transparent 50%),
+        var(--void);
+}
+
+.page-title {
+    font-family: 'Creepster', cursive;
+    font-size: 4rem;
+    color: var(--bone);
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 30px rgba(139, 0, 0, 0.3);
+    margin-bottom: 1rem;
+}
+
+.page-description {
+    color: var(--ash);
+    font-size: 1.2rem;
+    font-style: italic;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Section Styles */
+section, .section {
+    padding: 6rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.section-title {
+    font-family: 'Creepster', cursive;
+    font-size: 3rem;
+    color: var(--bone);
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 30px rgba(139, 0, 0, 0.3);
+}
+
+.section-divider {
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--blood), transparent);
+    margin: 0 auto 1.5rem;
+}
+
+.section-description {
+    color: var(--ash);
+    font-size: 1.1rem;
+    font-style: italic;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Content Container */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 3rem 6rem;
+}
+
+.container-narrow {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 3rem 6rem;
+}
+
+/* Games Grid */
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.game-card {
+    background: var(--fog);
+    border: 1px solid var(--mist);
+    overflow: hidden;
+    transition: transform 0.4s, box-shadow 0.4s;
+    cursor: pointer;
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.game-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--blood);
+    transform: scaleX(0);
+    transition: transform 0.4s;
+}
+
+.game-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 40px rgba(139, 0, 0, 0.1);
+    color: inherit;
+}
+
+.game-card:hover::before {
+    transform: scaleX(1);
+}
+
+.game-image {
+    width: 100%;
+    height: 180px;
+    background: var(--mist);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Creepster', cursive;
+    font-size: 3rem;
+    color: var(--blood);
+    opacity: 0.3;
+    position: relative;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+}
+
+.game-image::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: linear-gradient(0deg, var(--fog) 0%, transparent 100%);
+}
+
+.game-info {
+    padding: 1.5rem;
+}
+
+.game-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--bone);
+}
+
+.game-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: var(--ash);
+    margin-bottom: 1rem;
+}
+
+.game-year {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.game-tags, .tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.tag {
+    padding: 0.25rem 0.6rem;
+    background: rgba(139, 0, 0, 0.2);
+    border: 1px solid var(--rust);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ash);
+}
+
+/* Reviews List */
+.reviews-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.review-card {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 2rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--fog) 0%, var(--void) 100%);
+    border-left: 3px solid var(--blood);
+    transition: background 0.3s;
+    text-decoration: none;
+    color: inherit;
+}
+
+.review-card:hover {
+    background: linear-gradient(135deg, var(--mist) 0%, var(--fog) 100%);
+    color: inherit;
+}
+
+.review-image {
+    width: 200px;
+    height: 150px;
+    background: var(--mist);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Creepster', cursive;
+    font-size: 2rem;
+    color: var(--blood);
+    opacity: 0.4;
+    background-size: cover;
+    background-position: center;
+}
+
+.review-content h3 {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+    color: var(--bone);
+}
+
+.review-meta {
+    font-size: 0.85rem;
+    color: var(--ash);
+    margin-bottom: 1rem;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.review-excerpt {
+    color: var(--ash);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+.score {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1rem;
+    background: var(--blood);
+    color: var(--bone);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.read-more {
+    color: var(--blood-bright);
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-left: 1rem;
+    transition: color 0.3s;
+}
+
+.read-more:hover {
+    color: var(--bone);
+}
+
+/* Analysis Cards */
+.analysis-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.analysis-card {
+    padding: 2.5rem;
+    background: var(--fog);
+    border: 1px solid var(--mist);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.analysis-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(139, 0, 0, 0.1) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+
+.analysis-card:hover::before {
+    opacity: 1;
+}
+
+.analysis-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    color: inherit;
+}
+
+.analysis-card.featured {
+    grid-column: span 2;
+}
+
+.analysis-label {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    background: var(--blood);
+    color: var(--bone);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.analysis-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--bone);
+    line-height: 1.3;
+}
+
+.analysis-card.featured .analysis-title {
+    font-size: 2.2rem;
+}
+
+.analysis-excerpt {
+    color: var(--ash);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    font-style: italic;
+}
+
+.analysis-themes, .theme-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+}
+
+.theme-tag {
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--ash);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ash);
+}
+
+/* Single Article Styles */
+.article-header {
+    padding: 10rem 2rem 4rem;
+    text-align: center;
+    background: 
+        radial-gradient(ellipse at 50% 0%, rgba(139, 0, 0, 0.2) 0%, transparent 50%),
+        var(--void);
+}
+
+.article-label {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background: var(--blood);
+    color: var(--bone);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+}
+
+.article-title {
+    font-family: 'Creepster', cursive;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    color: var(--bone);
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 40px rgba(139, 0, 0, 0.3);
+    margin-bottom: 1.5rem;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.article-meta {
+    color: var(--ash);
+    font-size: 1rem;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.article-content {
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+}
+
+.article-content p {
+    margin-bottom: 1.5rem;
+    font-size: 1.15rem;
+    line-height: 1.9;
+}
+
+.article-content h2 {
+    font-family: 'Creepster', cursive;
+    font-size: 2rem;
+    color: var(--bone);
+    margin: 3rem 0 1.5rem;
+    letter-spacing: 0.05em;
+}
+
+.article-content h3 {
+    font-size: 1.4rem;
+    color: var(--bone);
+    margin: 2rem 0 1rem;
+}
+
+.article-content blockquote {
+    border-left: 3px solid var(--blood);
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+    font-style: italic;
+    color: var(--ash);
+}
+
+.article-content ul, .article-content ol {
+    margin: 1.5rem 0;
+    padding-left: 2rem;
+}
+
+.article-content li {
+    margin-bottom: 0.5rem;
+}
+
+.article-content img {
+    margin: 2rem 0;
+    border: 1px solid var(--mist);
+}
+
+/* Game Detail Page */
+.game-detail-header {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 3rem;
+    padding: 10rem 3rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.game-cover {
+    width: 300px;
+    height: 400px;
+    background: var(--mist);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Creepster', cursive;
+    font-size: 4rem;
+    color: var(--blood);
+    opacity: 0.3;
+    background-size: cover;
+    background-position: center;
+}
+
+.game-detail-info h1 {
+    font-family: 'Creepster', cursive;
+    font-size: 3rem;
+    color: var(--bone);
+    margin-bottom: 1rem;
+}
+
+.game-detail-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--ash);
+}
+
+.game-detail-meta dt {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.25rem;
+}
+
+.game-detail-meta dd {
+    font-size: 1rem;
+    color: var(--bone);
+}
+
+.game-description {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: var(--ash);
+    font-style: italic;
+}
+
+/* Footer */
+footer {
+    padding: 3rem;
+    text-align: center;
+    background: var(--void);
+    border-top: 1px solid var(--mist);
+}
+
+footer p {
+    color: var(--ash);
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+}
+
+.footer-logo {
+    font-family: 'Creepster', cursive;
+    font-size: 1.5rem;
+    color: var(--blood);
+    margin-bottom: 1rem;
+    display: block;
+}
+
+/* Back Link */
+.back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    color: var(--ash);
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.back-link:hover {
+    color: var(--blood-bright);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .analysis-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .analysis-card.featured {
+        grid-column: span 1;
+    }
+
+    .review-card {
+        grid-template-columns: 1fr;
+    }
+
+    .review-image {
+        width: 100%;
+    }
+
+    .game-detail-header {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .game-cover {
+        margin: 0 auto;
+    }
+
+    nav {
+        padding: 1rem;
+    }
+
+    .nav-links {
+        gap: 1.5rem;
+    }
+
+    .nav-links a {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 600px) {
+    section, .section, .container {
+        padding: 4rem 1.5rem;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+    }
+
+    .page-title {
+        font-size: 2.5rem;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .games-grid {
+        grid-template-columns: 1fr;
+    }
+}

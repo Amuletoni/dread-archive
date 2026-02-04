@@ -1,0 +1,50 @@
+---
+layout: default
+---
+
+<article>
+    <header class="article-header">
+        <a href="{{ '/analysis/' | relative_url }}" class="back-link">← Back to Analysis</a>
+        <span class="article-label">{{ page.category }}</span>
+        <h1 class="article-title">{{ page.title }}</h1>
+        <p class="article-meta">
+            {{ page.date | date: "%B %d, %Y" }}
+            {% if page.reading_time %} · {{ page.reading_time }} min read{% endif %}
+        </p>
+        {% if page.themes %}
+        <div class="theme-tags" style="justify-content: center; margin-top: 1.5rem;">
+            {% for theme in page.themes %}
+            <span class="theme-tag">{{ theme }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </header>
+
+    <div class="article-content">
+        {{ content }}
+    </div>
+
+    {% if page.related_games %}
+    <div class="container-narrow" style="border-top: 1px solid var(--mist); padding-top: 3rem;">
+        <h2 style="font-family: 'Creepster', cursive; font-size: 2rem; color: var(--bone); margin-bottom: 1.5rem;">Games Discussed</h2>
+        <div class="games-grid" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
+            {% for game_title in page.related_games %}
+                {% assign game = site.games | where: "title", game_title | first %}
+                {% if game %}
+                <a href="{{ game.url | relative_url }}" class="game-card">
+                    <div class="game-image" style="height: 120px;" {% if game.cover %}style="background-image: url('{{ game.cover | relative_url }}')"{% endif %}>
+                        {% unless game.cover %}?{% endunless %}
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title" style="font-size: 1rem;">{{ game.title }}</h3>
+                        <div class="game-meta">
+                            <span class="game-year">{{ game.year }}</span>
+                        </div>
+                    </div>
+                </a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</article>

@@ -1,0 +1,27 @@
+---
+layout: default
+title: Deep Analysis
+---
+
+<div class="page-header">
+    <h1 class="page-title">Deep Analysis</h1>
+    <p class="page-description">In-depth explorations of horror's greatest masterpieces</p>
+</div>
+
+<div class="container">
+    <div class="analysis-grid">
+        {% assign sorted_analyses = site.analyses | sort: 'date' | reverse %}
+        {% for analysis in sorted_analyses %}
+        <a href="{{ analysis.url | relative_url }}" class="analysis-card {% if forloop.first %}featured{% endif %}">
+            <span class="analysis-label">{{ analysis.category }}</span>
+            <h3 class="analysis-title">{{ analysis.title }}</h3>
+            <p class="analysis-excerpt">{{ analysis.excerpt | strip_html | truncate: 250 }}</p>
+            <div class="analysis-themes">
+                {% for theme in analysis.themes limit: 4 %}
+                <span class="theme-tag">{{ theme }}</span>
+                {% endfor %}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>

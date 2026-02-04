@@ -1,0 +1,50 @@
+---
+layout: default
+---
+
+<article>
+    <header class="article-header">
+        <a href="{{ '/reviews/' | relative_url }}" class="back-link">← Back to Reviews</a>
+        <span class="article-label">Review</span>
+        <h1 class="article-title">{{ page.title }}</h1>
+        <p class="article-meta">
+            Reviewed: {{ page.date | date: "%B %d, %Y" }} · Platform: {{ page.platform }}
+            {% if page.score %} · Score: <strong>{{ page.score }}</strong>{% endif %}
+        </p>
+    </header>
+
+    <div class="article-content">
+        {% if page.score %}
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <span class="score" style="font-size: 2rem; padding: 1rem 2rem;">{{ page.score }}</span>
+        </div>
+        {% endif %}
+
+        {{ content }}
+
+        {% if page.pros or page.cons %}
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--mist);">
+            {% if page.pros %}
+            <div>
+                <h3 style="color: #4a7c4a; margin-bottom: 1rem;">+ Pros</h3>
+                <ul>
+                    {% for pro in page.pros %}
+                    <li>{{ pro }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            {% if page.cons %}
+            <div>
+                <h3 style="color: var(--blood); margin-bottom: 1rem;">− Cons</h3>
+                <ul>
+                    {% for con in page.cons %}
+                    <li>{{ con }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</article>

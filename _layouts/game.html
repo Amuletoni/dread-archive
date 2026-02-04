@@ -1,0 +1,58 @@
+---
+layout: default
+---
+
+<article>
+    <div class="game-detail-header">
+        <div class="game-cover" {% if page.cover %}style="background-image: url('{{ page.cover | relative_url }}')"{% endif %}>
+            {% unless page.cover %}?{% endunless %}
+        </div>
+        <div class="game-detail-info">
+            <a href="{{ '/games/' | relative_url }}" class="back-link">← Back to Database</a>
+            <h1>{{ page.title }}</h1>
+            <dl class="game-detail-meta">
+                <div>
+                    <dt>Year</dt>
+                    <dd>{{ page.year }}</dd>
+                </div>
+                <div>
+                    <dt>Developer</dt>
+                    <dd>{{ page.developer }}</dd>
+                </div>
+                <div>
+                    <dt>Publisher</dt>
+                    <dd>{{ page.publisher }}</dd>
+                </div>
+                <div>
+                    <dt>Platform</dt>
+                    <dd>{{ page.platforms | join: ", " }}</dd>
+                </div>
+            </dl>
+            <div class="tags" style="margin-bottom: 1.5rem;">
+                {% for tag in page.tags %}
+                <span class="tag">{{ tag }}</span>
+                {% endfor %}
+            </div>
+            <p class="game-description">{{ page.description }}</p>
+        </div>
+    </div>
+
+    <div class="article-content">
+        {{ content }}
+    </div>
+
+    {% assign game_review = site.reviews | where: "game", page.title | first %}
+    {% if game_review %}
+    <div class="container-narrow" style="border-top: 1px solid var(--mist); padding-top: 3rem;">
+        <h2 style="font-family: 'Creepster', cursive; font-size: 2rem; color: var(--bone); margin-bottom: 1.5rem;">Our Review</h2>
+        <a href="{{ game_review.url | relative_url }}" class="review-card">
+            <div class="review-image">{{ game_review.score }}</div>
+            <div class="review-content">
+                <h3>{{ game_review.title }}</h3>
+                <p class="review-excerpt">{{ game_review.excerpt | strip_html | truncate: 200 }}</p>
+                <span class="read-more">Read Full Review →</span>
+            </div>
+        </a>
+    </div>
+    {% endif %}
+</article>

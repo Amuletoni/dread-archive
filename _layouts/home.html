@@ -1,0 +1,147 @@
+---
+layout: default
+---
+
+<section class="hero">
+    <h1 class="hero-title">DREAD ARCHIVE</h1>
+    <p class="hero-subtitle">Horror Video Game Encyclopedia</p>
+    <p class="hero-description">
+        A comprehensive archive dedicated to the dark art of horror gaming. 
+        From survival horror classics to psychological nightmares, 
+        we catalog, review, and dissect the games that haunt our dreams.
+    </p>
+    <div class="scroll-indicator">
+        Descend
+    </div>
+</section>
+
+<!-- Recent Games Section -->
+<section id="database">
+    <div class="section-header">
+        <h2 class="section-title">The Database</h2>
+        <div class="section-divider"></div>
+        <p class="section-description">A catalog of terror spanning decades of horror gaming</p>
+    </div>
+
+    <div class="games-grid">
+        {% assign recent_games = site.games | sort: 'date' | reverse | limit: 6 %}
+        {% for game in recent_games %}
+        <a href="{{ game.url | relative_url }}" class="game-card">
+            <div class="game-image" {% if game.cover %}style="background-image: url('{{ game.cover | relative_url }}')"{% endif %}>
+                {% unless game.cover %}?{% endunless %}
+            </div>
+            <div class="game-info">
+                <h3 class="game-title">{{ game.title }}</h3>
+                <div class="game-meta">
+                    <span class="game-year">{{ game.year }}</span>
+                    <span>{{ game.developer }}</span>
+                </div>
+                <div class="game-tags">
+                    {% for tag in game.tags limit: 2 %}
+                    <span class="tag">{{ tag }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+
+    <p style="text-align: center; margin-top: 3rem;">
+        <a href="{{ '/games/' | relative_url }}" class="read-more">View All Games →</a>
+    </p>
+</section>
+
+<!-- Recent Reviews Section -->
+<section id="reviews">
+    <div class="section-header">
+        <h2 class="section-title">Latest Reviews</h2>
+        <div class="section-divider"></div>
+        <p class="section-description">Classic reviews focused on gameplay, mechanics, and the horror experience</p>
+    </div>
+
+    <div class="reviews-list">
+        {% assign recent_reviews = site.reviews | sort: 'date' | reverse | limit: 3 %}
+        {% for review in recent_reviews %}
+        <a href="{{ review.url | relative_url }}" class="review-card">
+            <div class="review-image" {% if review.cover %}style="background-image: url('{{ review.cover | relative_url }}')"{% endif %}>
+                {% unless review.cover %}{{ review.title | truncate: 2, "" }}{% endunless %}
+            </div>
+            <div class="review-content">
+                <h3>{{ review.title }}</h3>
+                <div class="review-meta">Reviewed: {{ review.date | date: "%B %Y" }} · Platform: {{ review.platform }}</div>
+                <p class="review-excerpt">{{ review.excerpt | strip_html | truncate: 200 }}</p>
+                <span class="score">{{ review.score }}</span>
+                <span class="read-more">Read Full Review →</span>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+
+    <p style="text-align: center; margin-top: 3rem;">
+        <a href="{{ '/reviews/' | relative_url }}" class="read-more">View All Reviews →</a>
+    </p>
+</section>
+
+<!-- Recent Analysis Section -->
+<section id="analysis" style="background: radial-gradient(ellipse at 80% 20%, rgba(139, 0, 0, 0.1) 0%, transparent 50%), var(--void);">
+    <div class="section-header">
+        <h2 class="section-title">Deep Analysis</h2>
+        <div class="section-divider"></div>
+        <p class="section-description">In-depth explorations of horror's greatest masterpieces</p>
+    </div>
+
+    <div class="analysis-grid">
+        {% assign recent_analyses = site.analyses | sort: 'date' | reverse | limit: 3 %}
+        {% for analysis in recent_analyses %}
+        <a href="{{ analysis.url | relative_url }}" class="analysis-card {% if forloop.first %}featured{% endif %}">
+            <span class="analysis-label">{{ analysis.category }}</span>
+            <h3 class="analysis-title">{{ analysis.title }}</h3>
+            <p class="analysis-excerpt">{{ analysis.excerpt | strip_html | truncate: 250 }}</p>
+            <div class="analysis-themes">
+                {% for theme in analysis.themes limit: 4 %}
+                <span class="theme-tag">{{ theme }}</span>
+                {% endfor %}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+
+    <p style="text-align: center; margin-top: 3rem;">
+        <a href="{{ '/analysis/' | relative_url }}" class="read-more">View All Analysis →</a>
+    </p>
+</section>
+
+<!-- About Section -->
+<section id="about" style="background: linear-gradient(180deg, var(--void) 0%, var(--fog) 100%);">
+    <div class="section-header">
+        <h2 class="section-title">About the Archive</h2>
+        <div class="section-divider"></div>
+    </div>
+    <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+        <p style="font-size: 1.2rem; color: var(--ash); line-height: 1.9; margin-bottom: 2rem;">
+            The Dread Archive exists to preserve and analyze the rich history of horror video games. 
+            From the pixelated terrors of the early era to the photorealistic nightmares of today, 
+            we believe horror gaming deserves serious critical examination.
+        </p>
+        <p style="font-size: 1.2rem; color: var(--ash); line-height: 1.9;">
+            Our database catalogs games across every subgenre of horror. Our reviews focus on 
+            gameplay and mechanics—how a game plays, not just what it means. Our analysis 
+            articles dive deep into the themes, symbolism, and cultural significance of 
+            horror's greatest achievements.
+        </p>
+        <div style="display: flex; justify-content: center; gap: 4rem; margin-top: 3rem; padding-top: 3rem; border-top: 1px solid var(--mist);">
+            <div style="text-align: center;">
+                <span style="font-family: 'Creepster', cursive; font-size: 3rem; color: var(--blood); display: block;">{{ site.games.size }}</span>
+                <span style="font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ash);">Games Cataloged</span>
+            </div>
+            <div style="text-align: center;">
+                <span style="font-family: 'Creepster', cursive; font-size: 3rem; color: var(--blood); display: block;">{{ site.reviews.size }}</span>
+                <span style="font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ash);">Reviews</span>
+            </div>
+            <div style="text-align: center;">
+                <span style="font-family: 'Creepster', cursive; font-size: 3rem; color: var(--blood); display: block;">{{ site.analyses.size }}</span>
+                <span style="font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ash);">Deep Analyses</span>
+            </div>
+        </div>
+    </div>
+</section>

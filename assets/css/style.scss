@@ -1,17 +1,22 @@
 ---
 ---
-@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Libre_Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-    --blood: #8B0000;
-    --blood-bright: #B22222;
-    --void: #0a0a0a;
-    --fog: #1a1a1f;
-    --mist: #2a2a32;
-    --bone: #e8e4d9;
-    --ash: #9a9590;
-    --rust: #6B3A3A;
-    --shadow: rgba(0, 0, 0, 0.8);
+    /* Core colors - improved contrast */
+    --blood: #C41E3A;           /* Brighter, more readable red */
+    --blood-dark: #8B0000;      /* For hover states, accents */
+    --blood-glow: rgba(196, 30, 58, 0.4);
+    
+    --void: #0d0d0f;            /* Slightly warmer black */
+    --fog: #18181b;             /* Card backgrounds */
+    --mist: #27272a;            /* Borders, subtle elements */
+    
+    --bone: #f4f4f5;            /* Primary text - much brighter */
+    --ash: #a1a1aa;             /* Secondary text - improved contrast */
+    --smoke: #71717a;           /* Tertiary text */
+    
+    --rust: #7f1d1d;            /* Dark accent */
 }
 
 * {
@@ -25,16 +30,17 @@ html {
 }
 
 body {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: 'Libre Baskerville', Georgia, serif;
     background: var(--void);
     color: var(--bone);
     min-height: 100vh;
     overflow-x: hidden;
-    line-height: 1.7;
-    font-size: 18px;
+    line-height: 1.8;
+    font-size: 17px;
+    font-weight: 400;
 }
 
-/* Grain overlay */
+/* Subtle grain - reduced opacity for better readability */
 body::before {
     content: '';
     position: fixed;
@@ -43,19 +49,19 @@ body::before {
     width: 100%;
     height: 100%;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    opacity: 0.03;
+    opacity: 0.015;
     pointer-events: none;
     z-index: 9999;
 }
 
 a {
-    color: var(--blood-bright);
+    color: var(--blood);
     text-decoration: none;
-    transition: color 0.3s;
+    transition: color 0.2s ease;
 }
 
 a:hover {
-    color: var(--bone);
+    color: #ef4444;
 }
 
 img {
@@ -63,15 +69,17 @@ img {
     height: auto;
 }
 
-/* Navigation */
+/* ============================================
+   NAVIGATION - Improved readability
+   ============================================ */
 nav {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
-    background: linear-gradient(180deg, var(--void) 0%, transparent 100%);
-    padding: 1.5rem 3rem;
+    background: linear-gradient(180deg, var(--void) 0%, rgba(13, 13, 15, 0.95) 70%, transparent 100%);
+    padding: 1.25rem 3rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -79,44 +87,46 @@ nav {
 
 .logo {
     font-family: 'Creepster', cursive;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     color: var(--blood);
-    letter-spacing: 0.15em;
-    text-shadow: 0 0 30px rgba(139, 0, 0, 0.5);
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 30px var(--blood-glow);
     text-decoration: none;
     transition: text-shadow 0.3s;
 }
 
 .logo:hover {
-    text-shadow: 0 0 50px rgba(139, 0, 0, 0.8);
+    text-shadow: 0 0 40px var(--blood-glow);
     color: var(--blood);
 }
 
 .nav-links {
     display: flex;
-    gap: 3rem;
+    gap: 2.5rem;
     list-style: none;
 }
 
 .nav-links a {
+    font-family: 'IBM Plex Sans', sans-serif;
     color: var(--ash);
     text-decoration: none;
-    font-size: 0.95rem;
-    letter-spacing: 0.2em;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     position: relative;
-    transition: color 0.3s;
+    transition: color 0.2s;
 }
 
 .nav-links a::after {
     content: '';
     position: absolute;
-    bottom: -5px;
+    bottom: -6px;
     left: 0;
     width: 0;
-    height: 1px;
+    height: 2px;
     background: var(--blood);
-    transition: width 0.3s;
+    transition: width 0.2s ease;
 }
 
 .nav-links a:hover {
@@ -127,7 +137,20 @@ nav {
     width: 100%;
 }
 
-/* Hero Section */
+/* Mobile menu button */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--bone);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
 .hero {
     min-height: 100vh;
     display: flex;
@@ -138,64 +161,37 @@ nav {
     padding: 6rem 2rem;
     position: relative;
     background: 
-        radial-gradient(ellipse at 50% 0%, rgba(139, 0, 0, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 20% 80%, rgba(139, 0, 0, 0.1) 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 0%, rgba(196, 30, 58, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 20% 80%, rgba(196, 30, 58, 0.08) 0%, transparent 40%),
         var(--void);
-}
-
-.hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0, 0, 0, 0.1) 2px,
-        rgba(0, 0, 0, 0.1) 4px
-    );
-    pointer-events: none;
 }
 
 .hero-title {
     font-family: 'Creepster', cursive;
-    font-size: clamp(4rem, 12vw, 10rem);
+    font-size: clamp(3.5rem, 10vw, 8rem);
     color: var(--bone);
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     text-shadow: 
-        0 0 60px rgba(139, 0, 0, 0.4),
-        0 4px 0 var(--blood),
+        0 0 60px var(--blood-glow),
+        0 4px 0 var(--blood-dark),
         0 8px 20px rgba(0, 0, 0, 0.8);
-    animation: flicker 4s infinite;
     margin-bottom: 1rem;
 }
 
-@keyframes flicker {
-    0%, 100% { opacity: 1; }
-    92% { opacity: 1; }
-    93% { opacity: 0.8; }
-    94% { opacity: 1; }
-    96% { opacity: 0.9; }
-    97% { opacity: 1; }
-}
-
 .hero-subtitle {
-    font-size: 1.3rem;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 1rem;
     color: var(--ash);
-    letter-spacing: 0.4em;
+    letter-spacing: 0.35em;
     text-transform: uppercase;
-    margin-bottom: 3rem;
-    font-weight: 400;
+    margin-bottom: 2.5rem;
+    font-weight: 500;
 }
 
 .hero-description {
-    max-width: 600px;
-    font-size: 1.2rem;
+    max-width: 550px;
+    font-size: 1.15rem;
     color: var(--ash);
-    font-style: italic;
     line-height: 1.9;
     margin-bottom: 3rem;
 }
@@ -209,8 +205,9 @@ nav {
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
-    color: var(--ash);
-    font-size: 0.75rem;
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: var(--smoke);
+    font-size: 0.7rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
     animation: pulse 2s infinite;
@@ -228,93 +225,102 @@ nav {
     50% { opacity: 1; }
 }
 
-/* Page Headers */
+/* ============================================
+   PAGE HEADERS
+   ============================================ */
 .page-header {
-    padding: 10rem 2rem 4rem;
+    padding: 9rem 2rem 4rem;
     text-align: center;
     background: 
-        radial-gradient(ellipse at 50% 0%, rgba(139, 0, 0, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 0%, rgba(196, 30, 58, 0.1) 0%, transparent 50%),
         var(--void);
 }
 
 .page-title {
     font-family: 'Creepster', cursive;
-    font-size: 4rem;
+    font-size: 3.5rem;
     color: var(--bone);
-    letter-spacing: 0.1em;
-    text-shadow: 0 0 30px rgba(139, 0, 0, 0.3);
+    letter-spacing: 0.08em;
+    text-shadow: 0 0 30px var(--blood-glow);
     margin-bottom: 1rem;
 }
 
 .page-description {
+    font-family: 'IBM Plex Sans', sans-serif;
     color: var(--ash);
-    font-size: 1.2rem;
-    font-style: italic;
-    max-width: 600px;
+    font-size: 1.05rem;
+    max-width: 550px;
     margin: 0 auto;
 }
 
-/* Section Styles */
+/* ============================================
+   SECTION STYLES
+   ============================================ */
 section, .section {
-    padding: 6rem 3rem;
-    max-width: 1400px;
+    padding: 5rem 3rem;
+    max-width: 1300px;
     margin: 0 auto;
 }
 
 .section-header {
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 3.5rem;
 }
 
 .section-title {
     font-family: 'Creepster', cursive;
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: var(--bone);
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     margin-bottom: 1rem;
-    text-shadow: 0 0 30px rgba(139, 0, 0, 0.3);
+    text-shadow: 0 0 25px var(--blood-glow);
 }
 
 .section-divider {
-    width: 100px;
+    width: 80px;
     height: 2px;
     background: linear-gradient(90deg, transparent, var(--blood), transparent);
-    margin: 0 auto 1.5rem;
+    margin: 0 auto 1.25rem;
 }
 
 .section-description {
+    font-family: 'IBM Plex Sans', sans-serif;
     color: var(--ash);
-    font-size: 1.1rem;
-    font-style: italic;
-    max-width: 600px;
+    font-size: 1rem;
+    max-width: 500px;
     margin: 0 auto;
 }
 
-/* Content Container */
+/* ============================================
+   CONTAINERS
+   ============================================ */
 .container {
-    max-width: 1400px;
+    max-width: 1300px;
     margin: 0 auto;
-    padding: 2rem 3rem 6rem;
+    padding: 2rem 3rem 5rem;
 }
 
 .container-narrow {
-    max-width: 800px;
+    max-width: 750px;
     margin: 0 auto;
-    padding: 2rem 3rem 6rem;
+    padding: 2rem 2rem 5rem;
 }
 
-/* Games Grid */
+/* ============================================
+   GAMES GRID
+   ============================================ */
 .games-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 2rem;
+    gap: 1.75rem;
 }
 
 .game-card {
     background: var(--fog);
     border: 1px solid var(--mist);
+    border-radius: 4px;
     overflow: hidden;
-    transition: transform 0.4s, box-shadow 0.4s;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     cursor: pointer;
     position: relative;
     text-decoration: none;
@@ -322,31 +328,16 @@ section, .section {
     display: block;
 }
 
-.game-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: var(--blood);
-    transform: scaleX(0);
-    transition: transform 0.4s;
-}
-
 .game-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 40px rgba(139, 0, 0, 0.1);
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(196, 30, 58, 0.1);
+    border-color: var(--blood);
     color: inherit;
-}
-
-.game-card:hover::before {
-    transform: scaleX(1);
 }
 
 .game-image {
     width: 100%;
-    height: 180px;
+    height: 170px;
     background: var(--mist);
     display: flex;
     align-items: center;
@@ -354,7 +345,7 @@ section, .section {
     font-family: 'Creepster', cursive;
     font-size: 3rem;
     color: var(--blood);
-    opacity: 0.3;
+    opacity: 0.25;
     position: relative;
     overflow: hidden;
     background-size: cover;
@@ -367,17 +358,18 @@ section, .section {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 60%;
+    height: 50%;
     background: linear-gradient(0deg, var(--fog) 0%, transparent 100%);
 }
 
 .game-info {
-    padding: 1.5rem;
+    padding: 1.25rem 1.5rem 1.5rem;
 }
 
 .game-title {
-    font-size: 1.3rem;
-    font-weight: 600;
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
     margin-bottom: 0.5rem;
     color: var(--bone);
 }
@@ -385,13 +377,15 @@ section, .section {
 .game-meta {
     display: flex;
     gap: 1rem;
-    font-size: 0.85rem;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.8rem;
     color: var(--ash);
     margin-bottom: 1rem;
 }
 
 .game-year {
     font-family: 'JetBrains Mono', monospace;
+    color: var(--blood);
 }
 
 .game-tags, .tags {
@@ -401,173 +395,178 @@ section, .section {
 }
 
 .tag {
-    padding: 0.25rem 0.6rem;
-    background: rgba(139, 0, 0, 0.2);
+    font-family: 'IBM Plex Sans', sans-serif;
+    padding: 0.3rem 0.7rem;
+    background: rgba(196, 30, 58, 0.15);
     border: 1px solid var(--rust);
+    border-radius: 3px;
     font-size: 0.7rem;
-    letter-spacing: 0.1em;
+    font-weight: 500;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     color: var(--ash);
 }
 
-/* Reviews List */
+/* ============================================
+   REVIEWS LIST
+   ============================================ */
 .reviews-list {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.5rem;
 }
 
 .review-card {
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 180px 1fr;
     gap: 2rem;
-    padding: 2rem;
-    background: linear-gradient(135deg, var(--fog) 0%, var(--void) 100%);
+    padding: 1.75rem;
+    background: var(--fog);
+    border: 1px solid var(--mist);
     border-left: 3px solid var(--blood);
-    transition: background 0.3s;
+    border-radius: 4px;
+    transition: background 0.2s ease, border-color 0.2s ease;
     text-decoration: none;
     color: inherit;
 }
 
 .review-card:hover {
-    background: linear-gradient(135deg, var(--mist) 0%, var(--fog) 100%);
+    background: var(--mist);
+    border-color: var(--blood);
     color: inherit;
 }
 
 .review-image {
-    width: 200px;
-    height: 150px;
+    width: 180px;
+    height: 135px;
     background: var(--mist);
+    border-radius: 3px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Creepster', cursive;
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: var(--blood);
-    opacity: 0.4;
+    opacity: 0.3;
     background-size: cover;
     background-position: center;
 }
 
 .review-content h3 {
-    font-size: 1.6rem;
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
     margin-bottom: 0.5rem;
     color: var(--bone);
 }
 
 .review-meta {
-    font-size: 0.85rem;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.8rem;
     color: var(--ash);
-    margin-bottom: 1rem;
-    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 0.75rem;
 }
 
 .review-excerpt {
     color: var(--ash);
-    font-size: 1.05rem;
-    line-height: 1.8;
+    font-size: 1rem;
+    line-height: 1.75;
     margin-bottom: 1rem;
 }
 
 .score {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 1rem;
+    padding: 0.4rem 0.9rem;
     background: var(--blood);
     color: var(--bone);
     font-family: 'JetBrains Mono', monospace;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 500;
+    border-radius: 3px;
 }
 
 .read-more {
-    color: var(--blood-bright);
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: var(--blood);
     text-decoration: none;
-    font-size: 0.9rem;
-    letter-spacing: 0.15em;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     margin-left: 1rem;
-    transition: color 0.3s;
+    transition: color 0.2s;
 }
 
 .read-more:hover {
-    color: var(--bone);
+    color: #ef4444;
 }
 
-/* Analysis Cards */
+/* ============================================
+   ANALYSIS CARDS
+   ============================================ */
 .analysis-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 1.75rem;
 }
 
 .analysis-card {
-    padding: 2.5rem;
+    padding: 2rem;
     background: var(--fog);
     border: 1px solid var(--mist);
+    border-radius: 4px;
     position: relative;
     overflow: hidden;
-    transition: all 0.4s;
+    transition: all 0.3s ease;
     text-decoration: none;
     color: inherit;
     display: block;
 }
 
-.analysis-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(139, 0, 0, 0.1) 0%, transparent 60%);
-    opacity: 0;
-    transition: opacity 0.4s;
-}
-
-.analysis-card:hover::before {
-    opacity: 1;
-}
-
 .analysis-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+    border-color: var(--blood);
     color: inherit;
 }
 
 .analysis-card.featured {
     grid-column: span 2;
+    padding: 2.5rem;
 }
 
 .analysis-label {
+    font-family: 'IBM Plex Sans', sans-serif;
     display: inline-block;
-    padding: 0.3rem 0.8rem;
+    padding: 0.35rem 0.8rem;
     background: var(--blood);
     color: var(--bone);
     font-size: 0.7rem;
-    letter-spacing: 0.2em;
+    font-weight: 600;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     margin-bottom: 1rem;
+    border-radius: 3px;
 }
 
 .analysis-title {
-    font-size: 1.8rem;
-    font-weight: 600;
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
     margin-bottom: 1rem;
     color: var(--bone);
-    line-height: 1.3;
+    line-height: 1.4;
 }
 
 .analysis-card.featured .analysis-title {
-    font-size: 2.2rem;
+    font-size: 1.85rem;
 }
 
 .analysis-excerpt {
     color: var(--ash);
-    font-size: 1.05rem;
+    font-size: 1rem;
     line-height: 1.8;
-    font-style: italic;
 }
 
 .analysis-themes, .theme-tags {
@@ -578,74 +577,85 @@ section, .section {
 }
 
 .theme-tag {
-    padding: 0.3rem 0.8rem;
-    border: 1px solid var(--ash);
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
+    font-family: 'IBM Plex Sans', sans-serif;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--smoke);
+    border-radius: 3px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--ash);
 }
 
-/* Single Article Styles */
+/* ============================================
+   ARTICLE PAGES
+   ============================================ */
 .article-header {
-    padding: 10rem 2rem 4rem;
+    padding: 9rem 2rem 3.5rem;
     text-align: center;
     background: 
-        radial-gradient(ellipse at 50% 0%, rgba(139, 0, 0, 0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 0%, rgba(196, 30, 58, 0.15) 0%, transparent 50%),
         var(--void);
 }
 
 .article-label {
+    font-family: 'IBM Plex Sans', sans-serif;
     display: inline-block;
     padding: 0.4rem 1rem;
     background: var(--blood);
     color: var(--bone);
     font-size: 0.75rem;
-    letter-spacing: 0.2em;
+    font-weight: 600;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     margin-bottom: 1.5rem;
+    border-radius: 3px;
 }
 
 .article-title {
-    font-family: 'Creepster', cursive;
-    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
     color: var(--bone);
-    letter-spacing: 0.05em;
-    text-shadow: 0 0 40px rgba(139, 0, 0, 0.3);
     margin-bottom: 1.5rem;
-    max-width: 900px;
+    max-width: 850px;
     margin-left: auto;
     margin-right: auto;
+    line-height: 1.3;
 }
 
 .article-meta {
+    font-family: 'IBM Plex Sans', sans-serif;
     color: var(--ash);
-    font-size: 1rem;
-    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
 }
 
 .article-content {
-    max-width: 750px;
+    max-width: 700px;
     margin: 0 auto;
-    padding: 4rem 2rem;
+    padding: 3.5rem 2rem;
 }
 
 .article-content p {
     margin-bottom: 1.5rem;
-    font-size: 1.15rem;
+    font-size: 1.05rem;
     line-height: 1.9;
+    color: var(--bone);
 }
 
 .article-content h2 {
-    font-family: 'Creepster', cursive;
-    font-size: 2rem;
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.75rem;
+    font-weight: 700;
     color: var(--bone);
-    margin: 3rem 0 1.5rem;
-    letter-spacing: 0.05em;
+    margin: 3rem 0 1.25rem;
 }
 
 .article-content h3 {
-    font-size: 1.4rem;
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
     color: var(--bone);
     margin: 2rem 0 1rem;
 }
@@ -654,54 +664,65 @@ section, .section {
     border-left: 3px solid var(--blood);
     padding-left: 1.5rem;
     margin: 2rem 0;
-    font-style: italic;
     color: var(--ash);
 }
 
 .article-content ul, .article-content ol {
     margin: 1.5rem 0;
-    padding-left: 2rem;
+    padding-left: 1.5rem;
+    color: var(--bone);
 }
 
 .article-content li {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
+    line-height: 1.8;
+}
+
+.article-content strong {
+    color: var(--bone);
+    font-weight: 700;
 }
 
 .article-content img {
     margin: 2rem 0;
     border: 1px solid var(--mist);
+    border-radius: 4px;
 }
 
-/* Game Detail Page */
+/* ============================================
+   GAME DETAIL PAGE
+   ============================================ */
 .game-detail-header {
     display: grid;
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: 280px 1fr;
     gap: 3rem;
-    padding: 10rem 3rem 4rem;
-    max-width: 1200px;
+    padding: 9rem 3rem 4rem;
+    max-width: 1100px;
     margin: 0 auto;
 }
 
 .game-cover {
-    width: 300px;
-    height: 400px;
+    width: 280px;
+    height: 370px;
     background: var(--mist);
+    border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Creepster', cursive;
     font-size: 4rem;
     color: var(--blood);
-    opacity: 0.3;
+    opacity: 0.25;
     background-size: cover;
     background-position: center;
 }
 
 .game-detail-info h1 {
-    font-family: 'Creepster', cursive;
-    font-size: 3rem;
+    font-family: 'Libre Baskerville', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
     color: var(--bone);
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
 }
 
 .game-detail-meta {
@@ -709,73 +730,109 @@ section, .section {
     flex-wrap: wrap;
     gap: 2rem;
     margin-bottom: 1.5rem;
-    font-family: 'JetBrains Mono', monospace;
-    color: var(--ash);
 }
 
 .game-detail-meta dt {
-    font-size: 0.75rem;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
+    color: var(--smoke);
     margin-bottom: 0.25rem;
 }
 
 .game-detail-meta dd {
-    font-size: 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.95rem;
     color: var(--bone);
 }
 
 .game-description {
-    font-size: 1.15rem;
-    line-height: 1.8;
+    font-size: 1.1rem;
+    line-height: 1.85;
     color: var(--ash);
-    font-style: italic;
+    margin-top: 1.5rem;
 }
 
-/* Footer */
+/* ============================================
+   FOOTER
+   ============================================ */
 footer {
     padding: 3rem;
     text-align: center;
-    background: var(--void);
+    background: var(--fog);
     border-top: 1px solid var(--mist);
 }
 
 footer p {
-    color: var(--ash);
-    font-size: 0.9rem;
-    letter-spacing: 0.1em;
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: var(--smoke);
+    font-size: 0.85rem;
 }
 
 .footer-logo {
     font-family: 'Creepster', cursive;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     color: var(--blood);
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     display: block;
 }
 
-/* Back Link */
+/* ============================================
+   UTILITIES
+   ============================================ */
 .back-link {
+    font-family: 'IBM Plex Sans', sans-serif;
     display: inline-block;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     color: var(--ash);
-    font-size: 0.9rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
 }
 
 .back-link:hover {
-    color: var(--blood-bright);
+    color: var(--blood);
 }
 
-/* Responsive */
-@media (max-width: 900px) {
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 1024px) {
     .analysis-grid {
         grid-template-columns: 1fr;
     }
 
     .analysis-card.featured {
         grid-column: span 1;
+    }
+}
+
+@media (max-width: 768px) {
+    nav {
+        padding: 1rem 1.5rem;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--void);
+        flex-direction: column;
+        padding: 1.5rem;
+        gap: 1.5rem;
+        border-bottom: 1px solid var(--mist);
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: block;
     }
 
     .review-card {
@@ -784,48 +841,61 @@ footer p {
 
     .review-image {
         width: 100%;
+        height: 180px;
     }
 
     .game-detail-header {
         grid-template-columns: 1fr;
         text-align: center;
+        padding: 8rem 1.5rem 3rem;
     }
 
     .game-cover {
         margin: 0 auto;
+        width: 220px;
+        height: 290px;
     }
 
-    nav {
-        padding: 1rem;
-    }
-
-    .nav-links {
-        gap: 1.5rem;
-    }
-
-    .nav-links a {
-        font-size: 0.8rem;
-    }
-}
-
-@media (max-width: 600px) {
     section, .section, .container {
-        padding: 4rem 1.5rem;
-    }
-
-    .hero-title {
-        font-size: 3rem;
-    }
-
-    .page-title {
-        font-size: 2.5rem;
-    }
-
-    .nav-links {
-        display: none;
+        padding: 3.5rem 1.5rem;
     }
 
     .games-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .game-image {
+        height: 140px;
+    }
+
+    .game-info {
+        padding: 1rem;
+    }
+
+    .game-title {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2.8rem;
+    }
+
+    .page-title {
+        font-size: 2.2rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .games-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .analysis-grid {
         grid-template-columns: 1fr;
     }
 }
